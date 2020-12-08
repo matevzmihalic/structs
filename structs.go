@@ -571,7 +571,11 @@ func (s *Struct) nested(val reflect.Value) interface{} {
 			break
 		}
 
-		slices := make([]interface{}, val.Len())
+		var slices []interface{}
+		if !val.IsNil() {
+			slices = make([]interface{}, val.Len())
+		}
+		
 		for x := 0; x < val.Len(); x++ {
 			slices[x] = s.nested(val.Index(x))
 		}
